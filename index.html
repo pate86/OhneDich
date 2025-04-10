@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Für mein Bebi ❤️</title>
+  <style>
+    /* Grundlayout */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #4b0018, #800020);
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+      color: red;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 0, 50, 0.7);
+      margin-top: 30px;
+      max-width: 90%;
+      z-index: 2;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px rgba(255, 0, 50, 0.4);
+      }
+      to {
+        box-shadow: 0 0 40px rgba(255, 100, 150, 0.9);
+      }
+    }
+
+    .typewriter-text {
+      font-size: 1.5em;
+      min-height: 120px;
+      animation: text-glow 2s ease-in-out infinite alternate;
+      font-weight: bold; /* Fett für den Typewriter-Text */
+    }
+
+    @keyframes text-glow {
+      from {
+        text-shadow: 0 0 5px red;
+      }
+      to {
+        text-shadow: 0 0 15px pink, 0 0 20px red;
+      }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1em;
+      font-weight: bold;
+      color: white;
+      background-color: crimson;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    button:hover {
+      background-color: darkred;
+    }
+
+    /* Unten: Bild */
+    .bottom-image {
+      margin-bottom: 20px;
+      margin-top: -15px; /* Bild 15px nach oben verschoben */
+      z-index: 2;
+    }
+
+    .bottom-image img {
+      max-width: 240px; /* Bild um 100% vergrößert */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    /* Mobiloptimierungen */
+    @media (max-width: 768px) {
+      .typewriter-text {
+        font-size: 1.3em; /* Etwas kleinere Schrift für Tablets */
+      }
+
+      button {
+        width: 100%;
+        padding: 12px 25px; /* Weniger Padding für Tablets */
+      }
+
+      .bottom-image img {
+        max-width: 200px; /* Größeres Bild für Tablets */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .typewriter-text {
+        font-size: 1.2em; /* Noch kleinere Schrift für Handys */
+      }
+
+      button {
+        width: 100%;
+        padding: 10px 20px; /* Weniger Padding auf kleinen Geräten */
+      }
+
+      .bottom-image img {
+        max-width: 180px; /* Kleinere Bildgröße für Handys */
+      }
+    }
+
+    @media (max-width: 320px) {
+      .typewriter-text {
+        font-size: 1em; /* Sehr kleine Schrift für extra kleine Handys */
+      }
+
+      button {
+        padding: 8px 16px; /* Weniger Padding für sehr kleine Geräte */
+      }
+
+      .bottom-image img {
+        max-width: 150px; /* Noch kleinere Bildgröße für sehr kleine Handys */
+      }
+    }
+
+    /* Herz-Regen */
+    .heart {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      color: pink;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    /* Stern-Funkeln */
+    .star {
+      position: fixed;
+      background: white;
+      border-radius: 50%;
+      width: 2px;
+      height: 2px;
+      opacity: 0.8;
+      z-index: 0;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.5); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik (automatisch, oder klickbar) -->
+  <audio id="bg-music" autoplay loop>
+    <source src="mp3/od.mp3" type="audio/mpeg">
+    Dein Browser unterstützt das Audio-Tag nicht.
+  </audio>
+
+  <!-- Hauptinhalt -->
+  <div class="container">
+    <div class="typewriter-text" id="typewriter"></div>
+    <button onclick="document.getElementById('bg-music').play(); showHeartEffect();">🎵 Press the Button Babe ❤️</button>
+  </div>
+
+  <!-- Unten: Bild -->
+  <div class="bottom-image">
+    <img src="pics/wir.jpg" alt="Wir zwei ❤️" />
+  </div>
+
+  <!-- Effekte & Animationen -->
+  <script>
+    const text = "Hallo mein Bebi, wenn du mich vermisst, dann geh auf diese Seite, damit du mich nie vergisst! Press the Button Babe <3";
+    const speed = 120;
+    let i = 0;
+    let isDeleting = false;
+
+    function typeWriter() {
+      const el = document.getElementById("typewriter");
+
+      if (!isDeleting) {
+        el.innerHTML = text.substring(0, i + 1);
+        i++;
+        if (i === text.length) {
+          isDeleting = true;
+          setTimeout(typeWriter, 2000);
+          return;
+        }
+      } else {
+        el.innerHTML = text.substring(0, i - 1);
+        i--;
+        if (i === 0) {
+          isDeleting = false;
+        }
+      }
+
+      setTimeout(typeWriter, speed);
+    }
+
+    typeWriter();
+
+    // Herz-Regen
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+      heart.innerText = "💖";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 300);
+
+    // Sterne funkeln lassen
+    function createStars(num) {
+      for (let i = 0; i < num; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.animationDuration = (1 + Math.random() * 3) + "s";
+        document.body.appendChild(star);
+      }
+    }
+    createStars(80);
+
+    // Spezial-Herz Popup-Effekt
+    function showHeartEffect() {
+      const heartPopup = document.createElement("div");
+      heartPopup.classList.add("heart");
+      heartPopup.style.fontSize = "50px";
+      heartPopup.style.position = "fixed";
+      heartPopup.style.left = "50%";
+      heartPopup.style.top = "50%";
+      heartPopup.style.transform = "translate(-50%, -50%)";
+      heartPopup.style.animation = "fall 1s ease-in-out";
+      heartPopup.innerText = "💖";
+      document.body.appendChild(heartPopup);
+      setTimeout(() => heartPopup.remove(), 2000);
+    }
+  </script>
+</body>
+</html>
