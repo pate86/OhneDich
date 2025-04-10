@@ -147,44 +147,8 @@
     <div class="title">Memory Gallery 💕</div>
 
     <!-- Scrollbare Galerie -->
-    <div class="gallery">
-      <!-- Hier werden die 25 Bilder eingefügt -->
-      <!-- Du kannst auch JavaScript nutzen, aber hier ist die einfache HTML-Version -->
-      <!-- Pfade angepasst auf gallerypics/1.jpg bis 25.jpg -->
-      <!-- Einfaches copy-paste Muster: -->
-      <!-- BEGIN: Auto-Bilder -->
-      <!-- du kannst natürlich weitere Bilder anhängen wenn nötig -->
-      <!-- oder dynamisch per JS generieren wenn du willst -->
-
-      <!-- Alle 25 Bilder -->
-      <!-- Wenn du noch mehr willst, einfach weitermachen -->
-      <!-- BEGIN BILDER -->
-      <img src="gallerypics/1.jpg" alt="Memory 1" />
-      <img src="gallerypics/2.jpg" alt="Memory 2" />
-      <img src="gallerypics/3.jpg" alt="Memory 3" />
-      <img src="gallerypics/4.jpg" alt="Memory 4" />
-      <img src="gallerypics/5.jpg" alt="Memory 5" />
-      <img src="gallerypics/6.jpg" alt="Memory 6" />
-      <img src="gallerypics/7.jpg" alt="Memory 7" />
-      <img src="gallerypics/8.jpg" alt="Memory 8" />
-      <img src="gallerypics/9.jpg" alt="Memory 9" />
-      <img src="gallerypics/10.jpg" alt="Memory 10" />
-      <img src="gallerypics/11.jpg" alt="Memory 11" />
-      <img src="gallerypics/12.jpg" alt="Memory 12" />
-      <img src="gallerypics/13.jpg" alt="Memory 13" />
-      <img src="gallerypics/14.jpg" alt="Memory 14" />
-      <img src="gallerypics/15.jpg" alt="Memory 15" />
-      <img src="gallerypics/16.jpg" alt="Memory 16" />
-      <img src="gallerypics/17.jpg" alt="Memory 17" />
-      <img src="gallerypics/18.jpg" alt="Memory 18" />
-      <img src="gallerypics/19.jpg" alt="Memory 19" />
-      <img src="gallerypics/20.jpg" alt="Memory 20" />
-      <img src="gallerypics/21.jpg" alt="Memory 21" />
-      <img src="gallerypics/22.jpg" alt="Memory 22" />
-      <img src="gallerypics/23.jpg" alt="Memory 23" />
-      <img src="gallerypics/24.jpg" alt="Memory 24" />
-      <img src="gallerypics/25.jpg" alt="Memory 25" />
-      <!-- ENDE BILDER -->
+    <div class="gallery" id="gallery">
+      <!-- Die Bilder werden hier automatisch durch JavaScript geladen -->
     </div>
 
     <a class="memory-link" href="index.html">⬅️ Zurück zur Startseite</a>
@@ -215,6 +179,28 @@
       }
     }
     createStars(80);
+
+    // Dynamisches Laden der Bilder
+    const galleryDiv = document.getElementById("gallery");
+    const extensions = [".jpg", ".jpeg", ".JPG"];
+    const totalImages = 25;
+
+    // Versuche, jedes Bild zu laden mit allen möglichen Endungen
+    for (let i = 1; i <= totalImages; i++) {
+      let found = false;
+      for (let ext of extensions) {
+        const img = new Image();
+        img.src = `gallerypics/${i}${ext}`;
+        img.alt = `Memory ${i}`;
+        img.className = "memory-img";
+        img.onload = function () {
+          if (!found) {
+            galleryDiv.appendChild(img);
+            found = true;
+          }
+        };
+      }
+    }
   </script>
 
 </body>
