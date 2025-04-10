@@ -5,20 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory Gallery ❤️</title>
   <style>
-    /* Grundlayout */
     body {
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom right, #4b0018, #800020);
       font-family: 'Courier New', Courier, monospace;
-      overflow: hidden;
       color: red;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .container {
@@ -26,14 +21,9 @@
       padding: 30px 20px;
       border-radius: 20px;
       box-shadow: 0 0 30px rgba(255, 0, 50, 0.7);
-      margin-top: 30px;
-      max-width: 90%;
-      z-index: 2;
+      margin: 30px auto;
+      max-width: 1000px;
       animation: glow 3s ease-in-out infinite alternate;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
     @keyframes glow {
@@ -45,11 +35,10 @@
       }
     }
 
-    .typewriter-text {
-      font-size: 1.5em;
-      min-height: 120px;
+    .title {
+      font-size: 1.8em;
+      font-weight: bold;
       animation: text-glow 2s ease-in-out infinite alternate;
-      font-weight: bold; /* Fett für den Typewriter-Text */
     }
 
     @keyframes text-glow {
@@ -61,37 +50,15 @@
       }
     }
 
-    button {
-      margin-top: 20px;
-      padding: 15px 30px;
-      font-size: 1em;
-      font-weight: bold;
-      color: white;
-      background-color: crimson;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-      100% { transform: translateY(0); }
-    }
-
-    button:hover {
-      background-color: darkred;
-    }
-
-    /* Galerie Layout */
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 20px;
       margin-top: 30px;
-      max-width: 1000px;
+      max-height: 75vh;
+      overflow-y: auto;
+      padding-right: 10px;
+      scroll-behavior: smooth;
     }
 
     .gallery img {
@@ -102,12 +69,12 @@
     }
 
     .gallery img:hover {
-      transform: scale(1.1);
+      transform: scale(1.03);
       box-shadow: 0 0 25px rgba(255, 0, 50, 0.7);
     }
 
-    /* Link unter dem Bild */
     .memory-link {
+      display: inline-block;
       margin-top: 20px;
       font-size: 1.2em;
       color: pink;
@@ -119,59 +86,30 @@
       color: crimson;
     }
 
-    /* Mobiloptimierungen */
-    @media (max-width: 768px) {
-      .typewriter-text {
-        font-size: 1.3em; /* Etwas kleinere Schrift für Tablets */
-      }
-
-      button {
-        width: 100%;
-        padding: 12px 25px; /* Weniger Padding für Tablets */
-      }
-
-      .gallery img {
-        max-width: 200px; /* Größeres Bild für Tablets */
-      }
-    }
-
-    @media (max-width: 600px) {
-      .typewriter-text {
-        font-size: 1.2em; /* Noch kleinere Schrift für Handys */
-      }
-
-      button {
-        width: 100%;
-        padding: 10px 20px; /* Weniger Padding auf kleinen Geräten */
-      }
-
-      .gallery img {
-        max-width: 180px; /* Kleinere Bildgröße für Handys */
-      }
-    }
-
-    @media (max-width: 320px) {
-      .typewriter-text {
-        font-size: 1em; /* Sehr kleine Schrift für extra kleine Handys */
-      }
-
-      button {
-        padding: 8px 16px; /* Weniger Padding für sehr kleine Geräte */
-      }
-
-      .gallery img {
-        max-width: 150px; /* Noch kleinere Bildgröße für sehr kleine Handys */
-      }
-    }
-
-    /* Herz-Regen */
-    .heart {
+    .star, .heart {
       position: fixed;
+      z-index: 0;
+    }
+
+    .star {
+      background: white;
+      border-radius: 50%;
+      width: 2px;
+      height: 2px;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.5); }
+    }
+
+    .heart {
       top: -50px;
       font-size: 24px;
       color: pink;
       animation: fall linear infinite;
-      z-index: 1;
     }
 
     @keyframes fall {
@@ -181,54 +119,79 @@
       }
     }
 
-    /* Stern-Funkeln */
-    .star {
-      position: fixed;
-      background: white;
-      border-radius: 50%;
-      width: 2px;
-      height: 2px;
-      opacity: 0.8;
-      z-index: 0;
-      animation: twinkle 2s infinite ease-in-out alternate;
+    /* Scrollbar Styling (optional) */
+    .gallery::-webkit-scrollbar {
+      width: 8px;
     }
 
-    @keyframes twinkle {
-      from { opacity: 0.2; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.5); }
+    .gallery::-webkit-scrollbar-thumb {
+      background: crimson;
+      border-radius: 4px;
+    }
+
+    .gallery::-webkit-scrollbar-track {
+      background: transparent;
     }
   </style>
 </head>
 <body>
 
-  <!-- Musik (automatisch, oder klickbar) -->
+  <!-- Musik -->
   <audio id="bg-music" autoplay loop>
     <source src="mp3/od.mp3" type="audio/mpeg">
     Dein Browser unterstützt das Audio-Tag nicht.
   </audio>
 
-  <!-- Hauptinhalt -->
+  <!-- Inhalt -->
   <div class="container">
-    <div class="typewriter-text" id="typewriter">Your Memory Gallery ❤️</div>
-    <button onclick="document.getElementById('bg-music').play(); showHeartEffect();">🎵 Press the Button Babe ❤️</button>
+    <div class="title">Memory Gallery 💕</div>
 
-    <!-- Galerie -->
+    <!-- Scrollbare Galerie -->
     <div class="gallery">
-      <!-- Hier kommen die Bilder -->
-      <img src="pics/1.jpg" alt="Memory 1" />
-      <img src="pics/2.jpg" alt="Memory 2" />
-      <img src="pics/3.jpg" alt="Memory 3" />
-      <img src="pics/4.jpg" alt="Memory 4" />
-      <!-- Weitere Bilder können hier hinzugefügt werden -->
+      <!-- Hier werden die 25 Bilder eingefügt -->
+      <!-- Du kannst auch JavaScript nutzen, aber hier ist die einfache HTML-Version -->
+      <!-- Pfade angepasst auf gallerypics/1.jpg bis 25.jpg -->
+      <!-- Einfaches copy-paste Muster: -->
+      <!-- BEGIN: Auto-Bilder -->
+      <!-- du kannst natürlich weitere Bilder anhängen wenn nötig -->
+      <!-- oder dynamisch per JS generieren wenn du willst -->
+
+      <!-- Alle 25 Bilder -->
+      <!-- Wenn du noch mehr willst, einfach weitermachen -->
+      <!-- BEGIN BILDER -->
+      <img src="gallerypics/1.jpg" alt="Memory 1" />
+      <img src="gallerypics/2.jpg" alt="Memory 2" />
+      <img src="gallerypics/3.jpg" alt="Memory 3" />
+      <img src="gallerypics/4.jpg" alt="Memory 4" />
+      <img src="gallerypics/5.jpg" alt="Memory 5" />
+      <img src="gallerypics/6.jpg" alt="Memory 6" />
+      <img src="gallerypics/7.jpg" alt="Memory 7" />
+      <img src="gallerypics/8.jpg" alt="Memory 8" />
+      <img src="gallerypics/9.jpg" alt="Memory 9" />
+      <img src="gallerypics/10.jpg" alt="Memory 10" />
+      <img src="gallerypics/11.jpg" alt="Memory 11" />
+      <img src="gallerypics/12.jpg" alt="Memory 12" />
+      <img src="gallerypics/13.jpg" alt="Memory 13" />
+      <img src="gallerypics/14.jpg" alt="Memory 14" />
+      <img src="gallerypics/15.jpg" alt="Memory 15" />
+      <img src="gallerypics/16.jpg" alt="Memory 16" />
+      <img src="gallerypics/17.jpg" alt="Memory 17" />
+      <img src="gallerypics/18.jpg" alt="Memory 18" />
+      <img src="gallerypics/19.jpg" alt="Memory 19" />
+      <img src="gallerypics/20.jpg" alt="Memory 20" />
+      <img src="gallerypics/21.jpg" alt="Memory 21" />
+      <img src="gallerypics/22.jpg" alt="Memory 22" />
+      <img src="gallerypics/23.jpg" alt="Memory 23" />
+      <img src="gallerypics/24.jpg" alt="Memory 24" />
+      <img src="gallerypics/25.jpg" alt="Memory 25" />
+      <!-- ENDE BILDER -->
     </div>
 
-    <!-- Link zur Startseite -->
-    <a href="index.html" class="memory-link">Zurück zur Startseite</a>
+    <a class="memory-link" href="index.html">⬅️ Zurück zur Startseite</a>
   </div>
 
-  <!-- Effekte & Animationen -->
+  <!-- Herz-Regen -->
   <script>
-    // Herz-Regen
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -240,7 +203,7 @@
     }
     setInterval(createHeart, 300);
 
-    // Sterne funkeln lassen
+    // Sterne
     function createStars(num) {
       for (let i = 0; i < num; i++) {
         const star = document.createElement("div");
@@ -252,21 +215,6 @@
       }
     }
     createStars(80);
-
-    // Spezial-Herz Popup-Effekt
-    function showHeartEffect() {
-      const heartPopup = document.createElement("div");
-      heartPopup.classList.add("heart");
-      heartPopup.style.fontSize = "50px";
-      heartPopup.style.position = "fixed";
-      heartPopup.style.left = "50%";
-      heartPopup.style.top = "50%";
-      heartPopup.style.transform = "translate(-50%, -50%)";
-      heartPopup.style.animation = "fall 1s ease-in-out";
-      heartPopup.innerText = "💖";
-      document.body.appendChild(heartPopup);
-      setTimeout(() => heartPopup.remove(), 2000);
-    }
   </script>
 
 </body>
