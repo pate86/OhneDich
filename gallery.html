@@ -132,12 +132,29 @@
     .gallery::-webkit-scrollbar-track {
       background: transparent;
     }
+
+    /* Button Styling */
+    #push-button {
+      padding: 15px 30px;
+      background-color: #ff4081;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    #push-button:hover {
+      background-color: #f50057;
+    }
   </style>
 </head>
 <body>
 
   <!-- Musik -->
-  <audio id="bg-music" autoplay loop>
+  <audio id="bg-music">
     <source src="mp3/wasechtes.mp3" type="audio/mpeg">
     Dein Browser unterstützt das Audio-Tag nicht.
   </audio>
@@ -145,6 +162,9 @@
   <!-- Inhalt -->
   <div class="container">
     <div class="title">Memory Gallery 💕</div>
+
+    <!-- Push the Button -->
+    <button id="push-button" onclick="startMusic()">Push the Button</button>
 
     <!-- Scrollbare Galerie -->
     <div class="gallery" id="gallery">
@@ -154,8 +174,15 @@
     <a class="memory-link" href="index.html">⬅️ Zurück zur Startseite</a>
   </div>
 
-  <!-- Herz-Regen -->
   <script>
+    // Funktion zum Starten der Musik
+    function startMusic() {
+      const audio = document.getElementById("bg-music");
+      audio.play(); // Musik starten
+      document.getElementById("push-button").style.display = "none"; // Button nach dem Starten der Musik ausblenden
+    }
+
+    // Dein bestehender JavaScript-Code zum Erstellen von Herzen und Sternen
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
