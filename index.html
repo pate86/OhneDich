@@ -30,6 +30,10 @@
       max-width: 90%;
       z-index: 2;
       animation: glow 3s ease-in-out infinite alternate;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     @keyframes glow {
@@ -83,8 +87,7 @@
 
     /* Unten: Bild */
     .bottom-image {
-      margin-bottom: 20px;
-      margin-top: -15px; /* Bild 15px nach oben verschoben */
+      margin-top: 20px;
       z-index: 2;
     }
 
@@ -186,11 +189,11 @@
   <div class="container">
     <div class="typewriter-text" id="typewriter"></div>
     <button onclick="document.getElementById('bg-music').play(); showHeartEffect();">🎵 Press the Button Babe ❤️</button>
-  </div>
-
-  <!-- Unten: Bild -->
-  <div class="bottom-image">
-    <img src="pics/wir.jpg" alt="Wir zwei ❤️" />
+    
+    <!-- Bild unter dem Button -->
+    <div class="bottom-image">
+      <img src="pics/wir.jpg" alt="Wir zwei ❤️" />
+    </div>
   </div>
 
   <!-- Effekte & Animationen -->
